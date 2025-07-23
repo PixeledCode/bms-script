@@ -15,7 +15,7 @@ async def check_movie():
         await page.goto(URL, timeout=60000)
         content = await page.content()
         await browser.close()
-
+        print(content.lower())
         return MOVIE_NAME.lower() in content.lower()
 
 def send_email():
