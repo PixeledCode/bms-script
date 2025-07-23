@@ -4,7 +4,7 @@ import smtplib
 from email.message import EmailMessage
 from playwright.sync_api import sync_playwright
 
-MOVIE_NAME = "Jurassic"
+MOVIE_NAME = "Prejudice"
 FLAG_FILE = ".movie_found"
 
 def send_email():
