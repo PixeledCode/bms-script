@@ -2,8 +2,8 @@ name: Check BookMyShow Every 15 Min
 
 on:
   schedule:
-    - cron: "*/15 * * * *" # Every 15 minutes
-  workflow_dispatch: # Allow manual run
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
 
 jobs:
   check:
@@ -18,7 +18,9 @@ jobs:
           python-version: 3.11
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          pip install playwright
+          python -m playwright install
 
       - name: Run the script
         env:
