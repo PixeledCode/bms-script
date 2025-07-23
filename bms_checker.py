@@ -18,6 +18,7 @@ def check_movie_available():
             page.goto(BOOKMYSHOW_URL, timeout=60000)
             content = page.content()
             browser.close()
+            print(content.lower())
             return MOVIE_NAME.lower() in content.lower()
     except Exception as e:
         print(f"Playwright error: {e}")
