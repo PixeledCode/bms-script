@@ -26,7 +26,7 @@ def check_bms():
         try:
             print("⏳ Visiting BookMyShow...")
             page.goto("https://in.bookmyshow.com/explore/movies-bengaluru?languages=english", timeout=60000)
-            page.wait_for_selector("h3")
+            page.wait_for_selector(".kgjaGy")
 
             content = page.content()
             print(content.lower())
