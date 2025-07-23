@@ -3,11 +3,11 @@ import smtplib
 from email.message import EmailMessage
 from playwright.sync_api import sync_playwright
 
-MOVIE_NAME = "Jurassic World: Rebirth" 
+MOVIE_NAME = "prejudice" 
 
 def send_email():
     msg = EmailMessage()
-    msg.set_content(f"{MOVIE_NAME} is now showing on BookMyShow!")
+    msg.set_content(f"{MOVIE_NAME} is now showing on BookMyShow! Book here https://in.bookmyshow.com/explore/movies-bengaluru?languages=english")
     msg["Subject"] = f"{MOVIE_NAME} is now live! 🎬"
     msg["From"] = os.environ["GMAIL_USER"]
     msg["To"] = "ashoaib540918@gmail.com"
