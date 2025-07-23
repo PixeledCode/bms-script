@@ -5,7 +5,7 @@ import requests
 import os
 
 # Config
-MOVIE_NAME = "pride and prejudice"
+MOVIE_NAME = "Jurassic World: Rebirth"
 BOOKMYSHOW_URL = "https://in.bookmyshow.com/explore/movies-bengaluru?languages=english"
 
 # Email credentials from GitHub Secrets
