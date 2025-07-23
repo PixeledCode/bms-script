@@ -10,7 +10,7 @@ def send_email():
     msg.set_content(f"{MOVIE_NAME} is now showing on BookMyShow!")
     msg["Subject"] = f"{MOVIE_NAME} is now live! 🎬"
     msg["From"] = os.environ["GMAIL_USER"]
-    msg["To"] = os.environ["GMAIL_USER"]
+    msg["To"] = os.environ["TO_EMAIL"]
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
         smtp.login(os.environ["GMAIL_USER"], os.environ["GMAIL_PASS"])
