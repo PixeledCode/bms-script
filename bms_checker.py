@@ -1,46 +1,42 @@
-from playwright.sync_api import sync_playwright
-import smtplib, ssl
-from email.message import EmailMessage
+# bms_checker.py
+import asyncio
+from playwright.async_api import async_playwright
+import smtplib
 import os
+from email.mime.text import MIMEText
 
 MOVIE_NAME = "Jurassic World: Rebirth"
-BOOKMYSHOW_URL = "https://in.bookmyshow.com/explore/movies-bengaluru?languages=english"
+URL = "https://in.bookmyshow.com/explore/movies-bengaluru?languages=english"
 
-GMAIL_USER = os.environ['GMAIL_USER']
-GMAIL_PASS = os.environ['GMAIL_PASS']
-TO_EMAIL = os.environ['TO_EMAIL']
+async def check_movie():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=True)
+        page = await browser.new_page()
+        await page.goto(URL, timeout=60000)
+        content = await page.content()
+        await browser.close()
 
-def check_movie_available():
-    try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
-            page = browser.new_page()
-            page.goto(BOOKMYSHOW_URL, timeout=60000)
-            content = page.content()
-            browser.close()
-            print(content.lower())
-            return MOVIE_NAME.lower() in content.lower()
-    except Exception as e:
-        print(f"Playwright error: {e}")
-        return False
+        return MOVIE_NAME.lower() in content.lower()
 
 def send_email():
-    msg = EmailMessage()
-    msg.set_content(
-        f"🎟️ *{MOVIE_NAME.title()}* is now listed on BookMyShow Bengaluru!\n\nLink: {BOOKMYSHOW_URL}"
-    )
-    msg['Subject'] = f"🎬 {MOVIE_NAME.title()} is Now on BookMyShow!"
-    msg['From'] = GMAIL_USER
-    msg['To'] = TO_EMAIL
+    sender = os.getenv("GMAIL_USER")
+    password = os.getenv("GMAIL_PASS")
+    recipient = sender
+    subject = f"{MOVIE_NAME} is now available!"
+    body = f"Check the link: {URL}"
 
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
-        server.login(GMAIL_USER, GMAIL_PASS)
+    msg = MIMEText(body)
+    msg["From"] = sender
+    msg["To"] = recipient
+    msg["Subject"] = subject
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(sender, password)
         server.send_message(msg)
-        print("✅ Email sent!")
 
 if __name__ == "__main__":
-    if check_movie_available():
+    if asyncio.run(check_movie()):
+        print("🎬 Movie is available!")
         send_email()
     else:
         print("❌ Movie not found.")
