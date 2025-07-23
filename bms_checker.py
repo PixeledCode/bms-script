@@ -29,7 +29,6 @@ def check_bms():
             page.wait_for_selector(".kgjaGy")
 
             content = page.content()
-            print(content.lower())
             if MOVIE_NAME.lower() in content.lower():
                 print(f"🎉 Found movie: {MOVIE_NAME}")
                 send_email()
