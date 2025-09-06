@@ -4,12 +4,13 @@ import smtplib
 from email.message import EmailMessage
 from playwright.sync_api import sync_playwright
 
-MOVIE_NAME = "Prejudice"
+MOVIE_NAME = "Banaswadi"
 FLAG_FILE = ".movie_found"
+BMS_LINK = "https://in.bookmyshow.com/movies/bengaluru/demon-slayer-kimetsu-no-yaiba-the-movie-infinity-castle/buytickets/ET00436673/20250912"
 
 def send_email():
     msg = EmailMessage()
-    msg.set_content(f"{MOVIE_NAME} is now showing on BookMyShow! Book here https://in.bookmyshow.com/explore/movies-bengaluru?languages=english")
+    msg.set_content(f"{MOVIE_NAME} is now showing on BookMyShow! Book here {BMS_LINK}")
     msg["Subject"] = f"{MOVIE_NAME} is now live! 🎬"
     msg["From"] = os.environ["GMAIL_USER"]
     msg["To"] = os.environ["TO_EMAIL"]
@@ -36,8 +37,8 @@ def check_bms():
 
         try:
             print("⏳ Visiting BookMyShow...")
-            page.goto("https://in.bookmyshow.com/explore/movies-bengaluru?languages=english", timeout=60000)
-            page.wait_for_selector(".kgjaGy", timeout=30000)
+            page.goto(BMS_LINK, timeout=60000)
+            page.wait_for_selector(".kVfEkA", timeout=30000)
 
             content = page.content()
             if MOVIE_NAME.lower() in content.lower():
