@@ -6,7 +6,7 @@ from playwright.sync_api import sync_playwright
 
 MOVIE_NAME = "Banaswadi"
 FLAG_FILE = ".movie_found"
-BMS_LINK = "https://in.bookmyshow.com/movies/bengaluru/demon-slayer-kimetsu-no-yaiba-the-movie-infinity-castle/buytickets/ET00436673/20250912"
+BMS_LINK = "https://in.bookmyshow.com/movies/bengaluru/demon-slayer-kimetsu-no-yaiba-the-movie-infinity-castle/buytickets/ET00436673/20250913"
 
 def send_email():
     msg = EmailMessage()
