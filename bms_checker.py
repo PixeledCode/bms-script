@@ -38,7 +38,6 @@ def check_bms():
         try:
             print("⏳ Visiting District...")
             page.goto(BMS_LINK, timeout=60000)
-            page.wait_for_selector(".MovieSessionsListing_animate__QiK0y", timeout=30000)
 
             content = page.content()
             if MOVIE_NAME.lower() in content.lower():
