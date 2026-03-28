@@ -2,11 +2,14 @@ name: 🔁 Check BMS for Movie
 
 on:
   schedule:
-    - cron: "*/10 * * * *"  # Every 15 minutes
-  workflow_dispatch:  
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
 
 permissions:
-  contents: write      # Manual trigger support
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   check_movie:
@@ -23,8 +26,8 @@ jobs:
 
       - name: ⚙️ Install dependencies
         run: |
-          pip install playwright
-          python -m playwright install
+          pip install playwright beautifulsoup4
+          python -m playwright install chromium --with-deps
 
       - name: 🔎 Run movie checker
         env:
